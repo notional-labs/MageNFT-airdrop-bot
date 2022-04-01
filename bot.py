@@ -118,7 +118,7 @@ FOLLOW_TWITTER_TEXT = f"""
 """
 
 
-SUBMIT_BEP20_TEXT = f"""
+SUBMIT_JUNO_TEXT = f"""
 Type in *your Wallet Address*
 
 Please make sure your wallet supports the *{AIRDROP_NETWORK}*
@@ -280,7 +280,7 @@ def submit_address(update, context):
     if not user.id in USERINFO:
         return startAgain(update, context)
     USERINFO[user.id].update({"twitter_username": update.message.text.strip()})
-    update.message.reply_text(text=SUBMIT_BEP20_TEXT, parse_mode=telegram.ParseMode.MARKDOWN, reply_markup=ReplyKeyboardMarkup(
+    update.message.reply_text(text=SUBMIT_JUNO_TEXT, parse_mode=telegram.ParseMode.MARKDOWN, reply_markup=ReplyKeyboardMarkup(
         [["Cancel"]]
     ))
     return END_CONVERSATION
@@ -433,7 +433,7 @@ states = {
     FOLLOW_TELEGRAM: [MessageHandler(Filters.regex('^Submit Details$'), follow_telegram), cancelHandler],
     FOLLOW_TWITTER: [MessageHandler(Filters.regex('^Done$'), follow_twitter), cancelHandler],
     SUBMIT_ADDRESS: [cancelHandler, MessageHandler(Filters.text, submit_address)],
-    END_CONVERSATION: [cancelHandler, MessageHandler(Filters.regex('^0x[a-fA-F0-9]{40}$'), end_conversation)],
+    END_CONVERSATION: [cancelHandler, MessageHandler(Filters.regex('^juno1[a-fA-F0-9]{38}$'), end_conversation)],
     LOOP: [MessageHandler(
         Filters.text, loopAnswer
     )],

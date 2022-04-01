@@ -7,7 +7,7 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - convbot:/app/conversationbot
+      - /app/conversationbot
   mongodb:
     image: mongo
     restart: always
