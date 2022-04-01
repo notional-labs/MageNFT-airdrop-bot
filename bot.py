@@ -300,7 +300,7 @@ def end_conversation(update, context):
     user = update.message.from_user
     if not user.id in USERINFO:
         return startAgain(update, context)
-    USERINFO[user.id].update({"bep20": update.message.text})
+    USERINFO[user.id].update({"juno": update.message.text})
     USERINFO[user.id].update({"userId": user.id})
     USERINFO[user.id].update({"chatId": update.effective_chat.id})
     USERINFO[user.id].update({"name": getName(user)})
@@ -400,12 +400,12 @@ Here is *your referral link*
         refbal = "{:,.2f}".format(info["refCount"]*REFERRAL_REWARD)
         balance = BALANCE_TEXT.replace("IARTBALANCE", AIRDROP_AMOUNT).replace("REFERRALBALANCE", refbal)
         refferals = str(info["refCount"])
-        bep20Address = str(info["bep20"])
+        junoAddress = str(info["juno"])
         twitterUsername = str(info["twitter_username"])
         reply = f"""
 Name: {name}
 Referrals: {refferals}
-{AIRDROP_NETWORK} address: {bep20Address}
+{AIRDROP_NETWORK} address: {junoAddress}
 Twitter Username: {twitterUsername}
 """
     if(reply == ""):
@@ -433,7 +433,7 @@ states = {
     FOLLOW_TELEGRAM: [MessageHandler(Filters.regex('^Submit Details$'), follow_telegram), cancelHandler],
     FOLLOW_TWITTER: [MessageHandler(Filters.regex('^Done$'), follow_twitter), cancelHandler],
     SUBMIT_ADDRESS: [cancelHandler, MessageHandler(Filters.text, submit_address)],
-    END_CONVERSATION: [cancelHandler, MessageHandler(Filters.regex('^juno1[a-fA-F0-9]{38}$'), end_conversation)],
+    END_CONVERSATION: [cancelHandler, MessageHandler(Filters.regex('^juno1[a-zA-Z0-9]{38}$'), end_conversation)],
     LOOP: [MessageHandler(
         Filters.text, loopAnswer
     )],
